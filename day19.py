@@ -56,11 +56,39 @@ def generate_all_next_state_of_state(state, blueprint):
     clay_is_waste = clay_til_the_end > (max_clay_robot_needed * remain_min)
     obsidian_is_waste = obsidian_til_the_end > (max_obsidian_robot_needed * remain_min)
 
+    # state that create geode robot, return immediately if choose this path
+    if ore >= blueprint[4] \
+            and obsidian >= blueprint[5]:
+        state_that_create__one_geode_robot = deepcopy(state)
+        state_that_create__one_geode_robot[0] -= blueprint[4]
+        state_that_create__one_geode_robot[2] -= blueprint[5]
+        mining(state_that_create__one_geode_robot)
+        state_that_create__one_geode_robot[7] += 1
+        state_that_create__one_geode_robot[8] += 1
+        next_states.append(state_that_create__one_geode_robot)
+        return next_states
+
+
     # state that just mining
     state_that_not_create_anything = deepcopy(state)
     mining(state_that_not_create_anything)
     state_that_not_create_anything[8] += 1
     next_states.append(state_that_not_create_anything)
+
+
+    # this path create obsidian bot, consider after fail to pick geode bot, return immediately
+    if ore < blueprint[2] or clay < blueprint[ 3] or obsidian_robot >= max_obsidian_robot_needed or obsidian_is_waste:
+        pass
+    # state that create obsidian robot
+    else:
+        state_that_create__one_obsidian_robot = deepcopy(state)
+        state_that_create__one_obsidian_robot[0] -= blueprint[2]
+        state_that_create__one_obsidian_robot[1] -= blueprint[3]
+        mining(state_that_create__one_obsidian_robot)
+        state_that_create__one_obsidian_robot[6] += 1
+        state_that_create__one_obsidian_robot[8] += 1
+        next_states.append(state_that_create__one_obsidian_robot)
+        return next_states
 
 
     if ore < blueprint[0] or ore_robot >= max_ore_robot_needed or ore_is_waste:
@@ -84,28 +112,7 @@ def generate_all_next_state_of_state(state, blueprint):
         state_that_create__one_clay_robot[5] += 1
         state_that_create__one_clay_robot[8] += 1
         next_states.append(state_that_create__one_clay_robot)
-    if ore < blueprint[2] or clay < blueprint[
-        3] or obsidian_robot >= max_obsidian_robot_needed or obsidian_is_waste:
-        pass
-    # state that create obsidian robot
-    else:
-        state_that_create__one_obsidian_robot = deepcopy(state)
-        state_that_create__one_obsidian_robot[0] -= blueprint[2]
-        state_that_create__one_obsidian_robot[1] -= blueprint[3]
-        mining(state_that_create__one_obsidian_robot)
-        state_that_create__one_obsidian_robot[6] += 1
-        state_that_create__one_obsidian_robot[8] += 1
-        next_states.append(state_that_create__one_obsidian_robot)
-    # state that create geode robot
-    if ore >= blueprint[4] \
-            and obsidian >= blueprint[5]:
-        state_that_create__one_geode_robot = deepcopy(state)
-        state_that_create__one_geode_robot[0] -= blueprint[4]
-        state_that_create__one_geode_robot[2] -= blueprint[5]
-        mining(state_that_create__one_geode_robot)
-        state_that_create__one_geode_robot[7] += 1
-        state_that_create__one_geode_robot[8] += 1
-        next_states.append(state_that_create__one_geode_robot)
+
 
     return next_states
 
@@ -154,7 +161,7 @@ def simmulate_each_blueprint(blueprint):
     return states
 
 
-state_result = simmulate_each_blueprint(blueprints[0])
+state_result = simmulate_each_blueprint(blueprints[1])
 end = timer()
 print(end - start)
 # %%
