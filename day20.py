@@ -1,7 +1,7 @@
 data = open('input/day20_small.txt').read().splitlines()
 # data= open('input/day20.txt').read().splitlines()
 data = [int(d) for d in data]
-
+id_of_0 = data.index(0)
 
 # %% Build a circular linked list which can move its node to left or right
 class Node:
@@ -82,6 +82,12 @@ class CircularLinkedList:
 
         return str(l)
 
+    def find_node_after_node_times(self, node, times):
+        current = node
+        for i in range(times):
+            current = current.next
+        return current
+
 #%%
 # Part 1
 # Build a circular linked list
@@ -89,4 +95,41 @@ c = CircularLinkedList()
 for i, d in enumerate(data):
     c.add_node(d, i)
 #%%
+for index in range(c.size):
+    node = c.find_node_with_id(index)
+    if node.data == 0:
+        pass
+    elif node.data > 0:
+        c.move_node_right(node, node.data)
+    elif node.data < 0:
+        c.move_node_left(node, abs(node.data))
+
+
+
+#%%
+result_p_1 = c.find_node_after_node_times(c.find_node_with_id(id_of_0),1000).data +\
+c.find_node_after_node_times(c.find_node_with_id(id_of_0),2000).data +\
+c.find_node_after_node_times(c.find_node_with_id(id_of_0),3000).data
+
+#%% part2
+from copy import deepcopy
+data_2 = deepcopy(data)
+key = 811589153
+data_2 = [(d * key) % len(data_2) for d in data_2]
+
+#%%
+c2 = CircularLinkedList()
+for i, d in enumerate(data_2):
+    c2.add_node(d, i)
+
+#%%
+for index in range(c2.size):
+    node = c2.find_node_with_id(index)
+    if node.data == 0:
+        pass
+    elif node.data > 0:
+        c2.move_node_right(node, node.data)
+    elif node.data < 0:
+        c2.move_node_left(node, abs(node.data))
+
 #%%
