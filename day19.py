@@ -10,6 +10,7 @@ from itertools import combinations
 import math
 import numpy as np
 
+
 def mining(state):
     # state is a numpy array
     state[0] += state[4]
@@ -17,6 +18,7 @@ def mining(state):
     state[2] += state[6]
     state[3] += state[7]
     return state
+
 
 def is_state_better(state0, state1):
     # print(f"State 0 is {state0}")
@@ -27,6 +29,7 @@ def is_state_better(state0, state1):
             return True
         else:
             return False
+
 
 def generate_all_next_state_of_state(state, blueprint):
     max_ore_robot_needed = max([blueprint[0], blueprint[1], blueprint[2], blueprint[4]])
@@ -43,10 +46,6 @@ def generate_all_next_state_of_state(state, blueprint):
     ore = state[0]
     clay = state[1]
     obsidian = state[2]
-    geode = state[3]
-    cap_ore = max_ore_robot_needed * 24
-    cap_clay = max_clay_robot_needed * 24
-    cap_obsidian = max_obsidian_robot_needed * 24
 
     # remain minute and predict what resource will be at min 24
     remain_min = 24 - current_min
@@ -57,14 +56,13 @@ def generate_all_next_state_of_state(state, blueprint):
     clay_is_waste = clay_til_the_end > (max_clay_robot_needed * remain_min)
     obsidian_is_waste = obsidian_til_the_end > (max_obsidian_robot_needed * remain_min)
 
-    if ore_is_waste and clay_is_waste and obsidian_is_waste:
-        pass
     # state that just mining
-    else:
-        state_that_not_create_anything = deepcopy(state)
-        mining(state_that_not_create_anything)
-        state_that_not_create_anything[8] += 1
-        next_states.append(state_that_not_create_anything)
+    state_that_not_create_anything = deepcopy(state)
+    mining(state_that_not_create_anything)
+    state_that_not_create_anything[8] += 1
+    next_states.append(state_that_not_create_anything)
+
+
     if ore < blueprint[0] or ore_robot >= max_ore_robot_needed or ore_is_waste:
         pass
     # state that create  a ore robot
@@ -116,6 +114,7 @@ def generate_all_next_state_of_state(state, blueprint):
 from timeit import default_timer as timer
 
 start = timer()
+
 
 def simmulate_each_blueprint(blueprint):
     states_0 = [0, 0, 0, 0, 1, 0, 0, 0, 0]
