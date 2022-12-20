@@ -1,4 +1,4 @@
-data = open('input/day19_small.txt').read().splitlines()
+data = open('input/day19.txt').read().splitlines()
 
 blueprints = [[int(s) for s in line.split() if s.isdigit()] for line in data]
 # join each pargaraph into a single string
@@ -68,16 +68,14 @@ def generate_all_next_state_of_state(state, blueprint):
         next_states.append(state_that_create__one_geode_robot)
         return next_states
 
-
     # state that just mining
     state_that_not_create_anything = deepcopy(state)
     mining(state_that_not_create_anything)
     state_that_not_create_anything[8] += 1
     next_states.append(state_that_not_create_anything)
 
-
     # this path create obsidian bot, consider after fail to pick geode bot, return immediately
-    if ore < blueprint[2] or clay < blueprint[ 3] or obsidian_robot >= max_obsidian_robot_needed or obsidian_is_waste:
+    if ore < blueprint[2] or clay < blueprint[3] or obsidian_robot >= max_obsidian_robot_needed or obsidian_is_waste:
         pass
     # state that create obsidian robot
     else:
@@ -89,7 +87,6 @@ def generate_all_next_state_of_state(state, blueprint):
         state_that_create__one_obsidian_robot[8] += 1
         next_states.append(state_that_create__one_obsidian_robot)
         return next_states
-
 
     if ore < blueprint[0] or ore_robot >= max_ore_robot_needed or ore_is_waste:
         pass
@@ -113,16 +110,17 @@ def generate_all_next_state_of_state(state, blueprint):
         state_that_create__one_clay_robot[8] += 1
         next_states.append(state_that_create__one_clay_robot)
 
-
     return next_states
 
 
 # %%
 from timeit import default_timer as timer
 
-start = timer()
 
-
+#
+# start = timer()
+#
+#
 def simmulate_each_blueprint(blueprint):
     states_0 = [0, 0, 0, 0, 1, 0, 0, 0, 0]
     states = [states_0]
@@ -155,18 +153,30 @@ def simmulate_each_blueprint(blueprint):
 
         # sort base on geode and get first 10k result
         states = next_states
-        print(len(states))
+        # print(len(states))
         min_ += 1
-        print(min_)
+        # print(min_)
     return states
 
 
-state_result = simmulate_each_blueprint(blueprints[1])
-end = timer()
-print(end - start)
+#
+#
+# state_result = simmulate_each_blueprint(blueprints[1])
+# end = timer()
+# print(end - start)
 # %%
 # find states that have most geode
-state_result.sort(key=lambda x: x[3], reverse=True)
-print(state_result[0:5])
+# state_result.sort(key=lambda x: x[3], reverse=True)
+# print(state_result[0:5])
 
 # %%
+point = 0
+for index, blueprint in enumerate(blueprints):
+    state_result = sorted(simmulate_each_blueprint(blueprint), key=lambda x: x[3], reverse=True)
+    # print(index, state_result[0:5])
+    best_state_geode = state_result[0][3]
+
+
+    point += best_state_geode * (index + 1)
+
+print(point)
