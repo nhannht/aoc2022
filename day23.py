@@ -1,12 +1,6 @@
 input = open('input/day23.txt').read().splitlines()
 # %%
-from collections import deque
-
-directions = deque(["N", "S", "W", "E"])
-
-# %%
 from copy import deepcopy
-
 
 def expand_garden(garden_):
     """
@@ -39,6 +33,11 @@ def locations_of_all_elves(garden_):
             if garden_[i][j] == '#':
                 elves.append([i, j, i, j])
 
+
+# %%
+from collections import deque
+
+directions = deque(["N", "S", "W", "E"])
 
 # %%
 def propose_new_location(elf, garden_):
