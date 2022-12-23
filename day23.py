@@ -1,4 +1,4 @@
-input = open('input/day23_small.txt').read().splitlines()
+input = open('input/day23.txt').read().splitlines()
 # %%
 from collections import deque
 
@@ -116,22 +116,56 @@ def each_round(garden_):
 
 
 # %% Now, repeat in 10 rows
+# elves = []
+# garden = [[i for i in line] for line in input]
+# for round_ in range(10):
+#     garden = expand_garden(garden)
+#     locations_of_all_elves(garden)
+#     garden = each_round(garden)
+#%% get the smallest retangle with include all elves
+# def get_smallest_rectangle(garden_):
+#     """return the smallest rectangle with include all elves"""
+#     min_row = 100
+#     max_row = 0
+#     min_col = 100
+#     max_col = 0
+#     for i in range(len(garden_)):
+#         for j in range(len(garden_[0])):
+#             if garden_[i][j] == '#':
+#                 if i < min_row:
+#                     min_row = i
+#                 if i > max_row:
+#                     max_row = i
+#                 if j < min_col:
+#                     min_col = j
+#                 if j > max_col:
+#                     max_col = j
+#     return min_row, max_row, min_col, max_col
+# x_min, x_max, y_min, y_max = get_smallest_rectangle(garden)
+# blank_in_rectangle = 0
+# for i in range(x_min, x_max + 1):
+#     for j in range(y_min, y_max + 1):
+#         if garden[i][j] == '.':
+#             blank_in_rectangle += 1
+# %%
+# with open('output/day23.out', 'w') as f:
+#     for row in garden :
+#         f.write(''.join(row))
+#         f.write('\n')
+# %% part 2
+from copy import deepcopy
 elves = []
+result_part_2=0
 garden = [[i for i in line] for line in input]
-stop_expand = False
-for round_ in range(10):
-    if not stop_expand:
-        garden = expand_garden(garden)
+round_ = 0
+while True:
+    round_ += 1
+    print(round_)
+    garden = expand_garden(garden)
     locations_of_all_elves(garden)
-    x_min,y_min,x_max,y_max = min([i[0] for i in elves]),min([i[1] for i in elves]),max([i[0] for i in elves]),max([i[1] for i in elves])
     garden = each_round(garden)
-    x_min_new,y_min_new,x_max_new,y_max_new = min([i[0] for i in elves]),min([i[1] for i in elves]),max([i[0] for i in elves]),max([i[1] for i in elves])
-    if x_min_new == x_min and y_min_new == y_min and x_max_new == x_max and y_max_new == y_max:
-        stop_expand = True
-
-# %%
-with open('output/day23.out', 'w') as f:
-    for row in garden:
-        f.write(''.join(row))
-        f.write('\n')
-# %%
+    if all([elf[0] == elf[2] and elf[1] == elf[3] for elf in elves]):
+        result_part_2 = round_
+        break
+print(result_part_2)
+#%%
