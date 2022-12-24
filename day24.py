@@ -55,20 +55,22 @@ def is_in_blizzards(position, blizzards_):
         if position == blizzard[:2]:
             return True
     return False
+
+
 def my_positions_each_min(position: tuple, blizzards_, rocks_, my_positions_):
     # have 5 options, move up,dowm,left,right, stay
     x, y = position
-    if (x,y) not in rocks_ and not is_in_blizzards((x,y), blizzards_):
-        my_positions_.add((x,y))
+    if (x, y) not in rocks_ and not is_in_blizzards((x, y), blizzards_):
+        my_positions_.add((x, y))
     up = (x - 1, y)
     down = (x + 1, y)
     left = (x, y - 1)
     right = (x, y + 1)
-    if up not in rocks_ and not is_in_blizzards(up, blizzards_)and up[0] > 0:
+    if up not in rocks_ and not is_in_blizzards(up, blizzards_) and up[0] >= 0:
         my_positions_.add(up)
     if down not in rocks_ and not is_in_blizzards(down, blizzards_) and down[0] < len(data):
         my_positions_.add(down)
-    if left not in rocks_ and not is_in_blizzards(left, blizzards_) and left[1] > 0:
+    if left not in rocks_ and not is_in_blizzards(left, blizzards_) and left[1] >= 0:
         my_positions_.add(left)
     if right not in rocks_ and not is_in_blizzards(right, blizzards_) and right[1] < len(data[0]):
         my_positions_.add(right)
@@ -77,25 +79,75 @@ def my_positions_each_min(position: tuple, blizzards_, rocks_, my_positions_):
 
 # %%
 from copy import deepcopy
+
 my_positions = set()
 start = (0, 1)
 out = (len(data) - 1, len(data[0]) - 2)
 my_positions.add(start)
-min = 0
+min_ = 0
 new_blizzards = deepcopy(blizzards)
 while True:
     new_positions = set()
 
-    min += 1
+    min_ += 1
     new_blizzards = blizzards_move(new_blizzards, rocks)
     for position in my_positions:
-        my_positions_each_min(position, new_blizzards, rocks,new_positions)
+        my_positions_each_min(position, new_blizzards, rocks, new_positions)
 
-    my_positions=new_positions
+    my_positions = new_positions
     if out in my_positions:
-        print(min)
+        print(min_)
         break
     # if min == 4:
     #     break
 
-# %%
+
+# %% part 2
+# from end to start
+my_positions = set()
+start = (len(data) - 1, len(data[0]) - 2)
+out = (0, 1)
+my_positions.add(start)
+min_2 = 0
+# new_blizzards = deepcopy(blizzards)
+while True:
+    new_positions = set()
+
+    min_2 += 1
+    new_blizzards = blizzards_move(new_blizzards, rocks)
+    for position in my_positions:
+        my_positions_each_min(position, new_blizzards, rocks, new_positions)
+
+    my_positions = new_positions
+    if out in my_positions:
+        print(min_2)
+        break
+    # if min == 4:
+    #     break
+
+
+#%%
+# go to end
+my_positions = set()
+start = (0, 1)
+out = (len(data) - 1, len(data[0]) - 2)
+my_positions.add(start)
+min_3 = 0
+while True:
+    new_positions = set()
+
+    min_3 += 1
+    new_blizzards = blizzards_move(new_blizzards, rocks)
+    for position in my_positions:
+        my_positions_each_min(position, new_blizzards, rocks, new_positions)
+
+    my_positions = new_positions
+    if out in my_positions:
+        print(min_3)
+        break
+    # if min == 4:
+    #     break
+
+
+#%%
+print(min_ + min_2 + min_3)
