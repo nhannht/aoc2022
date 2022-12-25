@@ -39,3 +39,4 @@ for index,match in enumerate(input):
             result += 6
         elif demand[index] == "lose":
             result += 2
+print(result)

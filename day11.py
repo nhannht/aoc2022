@@ -28,9 +28,6 @@ def proper_round(num, dec=0):
         return float(num[:-2-(not dec)]+str(int(num[-2-(not dec)])+1))
     return float(num[:-1])
 #%%
-from copy import deepcopy
-monkey_balls_track = [deepcopy(monkey[1]) for monkey in monkeys]
-#%%
 # Monkey 0:
 #   Starting items: 89, 95, 92, 64, 87, 68
 #   Operation: new = old * 11

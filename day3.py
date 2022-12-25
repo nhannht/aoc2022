@@ -33,3 +33,4 @@ point = 0
 for dup in dups:
     for char in dup:
         point += points[char]
+

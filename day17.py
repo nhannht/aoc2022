@@ -104,7 +104,7 @@ def move_block_until_touch(block_num):
 # %%
 from pprint import pprint
 output = []
-count_block =
+count_block = 0
 while True:
     count_block += 1
     next_block = next(blocks_num)
@@ -121,17 +121,17 @@ while True:
     if count_block == 2300:
         break
 #%%
-from pandas import DataFrame
-df = DataFrame(output,columns=['block','block_pos','height'])
+# from pandas import DataFrame
+# df = DataFrame(output,columns=['block','block_pos','height'])
 
 
 #%%
 # use sklearn to  predict height from block number
-from sklearn.linear_model import LinearRegression,LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
-X =  df['block'].values.reshape(-1,1)
-y = df['height']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-model = LinearRegression()
+# from sklearn.linear_model import LinearRegression,LogisticRegression
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import mean_squared_error
+# from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+# X =  df['block'].values.reshape(-1,1)
+# y = df['height']
+# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# model = LinearRegression()

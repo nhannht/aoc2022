@@ -39,7 +39,6 @@ def draw():
 
 
 for line in data:
-    global current_drawing,cycles,picture,row,point,spire_position
     if line == 'noop':
         cycles += 1
         draw()
@@ -63,14 +62,14 @@ for line in data:
         spire_position = [point - 1, point, point + 1]
 
 #%%
-from pandas import DataFrame
-df = DataFrame(picture)
+# from pandas import DataFrame
+# df = DataFrame(picture)
 
 #%%
-from seaborn import heatmap
-heatmap(df)
+# from seaborn import heatmap
+# heatmap(df)
 #%%
-for line in picture:
-    print(''.join([str(i) for i in line]))
+# for line in picture:
+#     print(''.join([str(i) for i in line]))
 
 #%%
