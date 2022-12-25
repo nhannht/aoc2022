@@ -3,18 +3,6 @@ input = open('input/day23.txt').read().splitlines()
 from copy import deepcopy
 
 def expand_garden(garden_):
-    """
-    The create_new_garden function takes the garden list and adds 2 blank rows and columns to each side of the garden.
-    The new_garden list is returned.
-
-    Args:
-
-    Returns:
-        A new garden with an extra row and column of '
-
-    Doc Author:
-        Trelent
-    """
     new_garden_ = [['.' for i in range(len(garden_[0]) + 2)]]
     for row in garden_:
         new_row = ['.']

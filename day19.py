@@ -18,16 +18,6 @@ def mining(state):
 
 
 def is_state_better(state0, state1):
-    """
-    The is_state_better function takes two states as input and returns a boolean value.
-    The function checks if the first state is better than the second state. The function
-    returns True if the first state is better, False otherwise.
-
-    :param state0: true if this state is better
-    :param state1:
-    :return: True if the state is better than the previous one
-    :doc-author: nhannht
-    """
     # print(f"State 0 is {state0}")
     result = [a - b for a, b in zip(state0, state1)]
     # print(f"State 1 is {result}")
@@ -39,16 +29,6 @@ def is_state_better(state0, state1):
 
 
 def generate_all_next_state_of_state(state, blueprint):
-    """
-    The generate_all_next_state_of_state function takes in a state and the blueprint of the robot.
-    It returns all possible next states that can be reached from this current state, given that we have already created one ore, clay or obsidian robot.
-
-
-    :param state: Store the current state of the system
-    :param blueprint: Determine the number of robots needed to create a geode
-    :return: A list of all possible next states
-    :doc-author: Trelent
-    """
     max_ore_robot_needed = max([blueprint[0], blueprint[1], blueprint[2], blueprint[4]])
     max_clay_robot_needed = math.ceil(blueprint[3])
     max_obsidian_robot_needed = math.ceil(blueprint[5])
@@ -139,16 +119,6 @@ start = timer()
 #
 #
 def simmulate_each_blueprint(blueprint):
-    """
-    The simmulate_each_blueprint function simulates the blueprint and returns a list of all possible states.
-    The function starts with a state that is 0,0,0,0, 1, 0 ,0 ,0 ,and 0. Then it generates all next states by
-    combining each state in the current list of states with each other. The function then checks if one state is better than another
-    state based on geode value and removes the worse one from the current list of states.
-
-    :param blueprint: Represent the state of a blueprint
-    :return: All the states that can be reached from a given state
-    :doc-author: Trelent
-    """
     states_0 = [0, 0, 0, 0, 1, 0, 0, 0, 0]
     states = [states_0]
     min_ = 0
